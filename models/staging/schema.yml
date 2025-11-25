@@ -1,0 +1,51 @@
+version: 2
+
+sources:
+  - name: bigquery_source
+    schema: dbt_bhussain_staging
+
+    tables:
+      - name: orders
+
+models:
+  - name: stg_orders
+    description: "Staging model that cleans and standardizes the orders data from the raw staging.orders table."
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_name
+        description: "Name of the customer."
+        tests:
+          - not_null
+
+      - name: product
+        description: "Name of the product ordered."
+        tests:
+          - not_null
+
+      - name: quantity
+        description: "Quantity of items ordered."
+        tests:
+          - not_null
+
+      - name: price
+        description: "Price per item."
+        tests:
+          - not_null
+
+      - name: total_amount
+        description: "Calculated quantity × price."
+        tests:
+          - not_null
+
+      - name: order_date
+        description: "Date when the order was placed."
+        tests:
+          - not_null
+
+      - name: order_month
+        description: "YYYY-MM formatted month for reporting."
